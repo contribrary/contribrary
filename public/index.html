@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTRIBRARY</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.imgbin.com/7/6/5/imgbin-letter-c-alphabet-c-geRtCxaWtGmBTmipxT7D6K85i.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background-color: rgb(237, 235, 235);
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            overflow-x: hidden;
+            cursor: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            
+        }
+
+        .dark-mode {
+            background-color: rgb(23, 23, 23);
+        }
+
+        @keyframes rotate {
+            from {
+                rotate: 0deg;
+            }
+            50% {
+                scale: 1 1.5;
+            }
+            to {
+                rotate: 360deg;
+            }
+        }
+
+        #blob {
+            background: linear-gradient(to right, aquamarine, mediumpurple);
+            height: 37vmax;
+            aspect-ratio: 1;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            translate: -50% -50%;
+            border-radius: 50%;
+            animation: rotate 10s infinite;
+            opacity: 0.8;
+        }
+
+        #pointer {
+            background-color: white;
+            height: 30px;
+            left: 50%;
+            top: 50%;
+            translate: -50% -50%;
+            aspect-ratio: 1;
+            position: fixed;
+            border-radius: 50%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        #down {
+            background-color: white;
+            height: 60px;
+            width: 60px; /* Explicit width for consistency */
+            left: 52.5vw;
+            top: 93%;
+            translate: -100% -50%;
+            position: fixed;
+            border-radius: 50%;
+            z-index: 100;
+            /* Flexbox to center image */
+            display: flex;
+        }
+
+        #down:hover {
+            background-color: rgb(20, 20, 20);
+        }
+
+        #down:hover img {
+
+            filter: invert(100%);
+        }
+
+        #down img {
+            color: black;
+            width: clamp(3rem, 5vw, 2rem);
+            height: clamp(3rem, 5vw, 2rem);
+        }
+
+        #blur {
+            height: 100%;
+            width: 100vw;
+            position: fixed;
+            z-index: 2;
+            backdrop-filter: blur(12vmax);
+        }
+
+        h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(4rem, 10vw, 10rem);
+            color: white;
+            white-space: nowrap;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 0;
+            position: relative;
+            z-index: 3;
+        }
+
+        h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(1rem, 4vw, 3rem);
+            color: white;
+            white-space: nowrap;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 0;
+            position: absolute;
+            z-index: 3;
+        }
+
+        form {
+            position: relative;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #search {
+            flex-grow: 1;
+            width: 40vw;
+            height: clamp(2rem, 7vw, 2.5rem);
+            padding: 0.5rem 1rem;
+            padding-left: 20px;
+            border: none;
+            border-radius: 50px;
+            outline: none;
+            cursor: none;
+            transition: background-color 0.5s ease;
+            color: #000;
+            font-size: larger;
+        }
+
+        button {
+            width: clamp(2.5rem, 8vw, 3rem);
+            height: clamp(2.5rem, 8vw, 3rem);
+            border: none;
+            padding: 1.7rem 1.7rem;
+            border-radius: 50%;
+            background-color: white;
+            cursor: none;
+            transition: background-color 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #search:hover {
+            background-color: rgb(20, 20, 20);
+            color:white;
+            transition: background-color 0.5s ease;
+        }
+        #search:hover::placeholder {
+            color: rgb(255, 255, 255);
+            opacity: 1; /* Firefox */
+        }
+        ::placeholder {
+            font-family: 'Space Mono', monospace;
+            color: rgb(0, 0, 0);
+            opacity: 1; /* Firefox */
+            font-size: larger;
+        }
+
+        button:hover {
+            background-color: rgb(20, 20, 20);
+        }
+
+        button i {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            color: rgb(20, 20, 20);
+            transition: color 0.5s ease;
+        }
+
+        button:hover i {
+            color: white;
+        }
+
+        #random_article {
+            width: clamp(4rem, 8vw, 3rem);
+            height: clamp(2.5rem, 8vw, 3rem);
+            border: none;
+            padding: 0;
+            margin-top: 2rem;
+            border-radius: 50px;
+            background-color: white;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            overflow: hidden;
+            position: relative;
+
+
+            /* Smooth transition */
+            transition: width 0.7s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        #random_article:hover {
+            background-color: rgb(20, 20, 20);
+            width: 20rem;
+        }
+
+        #random_article img,
+        #random_article span {
+            position: absolute;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        /* Ensure image stays centered */
+        #random_article img {
+            width: clamp(1.5rem, 5vw, 2rem);
+            height: clamp(1.5rem, 5vw, 2rem);
+        }
+
+        /* Initially hide the text */
+        #random_article span {
+            font-size: 1rem;
+            font-family: 'Space Mono', monospace;
+            color: white;
+            opacity: 0;
+            white-space: nowrap;
+        }
+
+        /* Hover Effects */
+        #random_article:hover img {
+            opacity: 0; /* Hide image */
+        }
+
+        #random_article:hover span {
+            opacity: 1; /* Show text */
+        }
+
+        #image-track {
+            display: flex;
+            gap: 4vmin;
+            position: absolute;
+            left: 50%;
+            top: 120vh; /* Moves the images below the main menu */
+            transform: translate(-50%, 0%);
+            user-select: none; /* Prevents image highlighting */
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            padding-bottom: 30rem;
+        }
+
+        #image-track.visible {
+            opacity: 1;
+        }
+
+        #image-track > .image {
+            width: 40vmin;
+            height: 56vmin;
+            object-fit: cover;
+            object-position: 100% center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <p id="rowcount" class="hidden">{{ row_count }}</p>
+    <h1>CONTRIBRARY</h1>
+    <form>
+        <input type="text" id="search" name="search" placeholder="Search..." required>
+        <button type="submit"><i class='fa fa-search' style='font-size:clamp(2rem, 3vw, 2rem);'></i></button>
+    </form>
+    <br>
+    <button id="random_article" onclick="random()">
+        <img src="https://cdn-icons-png.flaticon.com/512/7320/7320108.png">
+        <span>Random Article</span>
+    </button>
+    <button id="down">
+        <img src="https://cdn3.iconfinder.com/data/icons/meteocons/512/sun-symbol-1024.png">
+    </button>
+
+    <div id="image-track"  data-mouse-down-at="0" data-prev-percentage="-50">
+        <img class="image" src="https://images.unsplash.com/photo-1524781289445-ddf8f5695861?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1610194352361-4c81a6a8967e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1618202133208-2907bebba9e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1495805442109-bf1cf975750b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1548021682-1720ed403a5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1496753480864-3e588e0269b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2134&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1613346945084-35cccc812dd5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1759&q=80" draggable="false" />
+        <img class="image" src="https://images.unsplash.com/photo-1516681100942-77d8e7f9dd97?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" draggable="false" />
+    </div>
+    <div id="blob"></div>
+    <div id="pointer"></div>
+    <div id="blur"></div>
+    
+    <script>
+        const blob = document.getElementById("blob");
+        const pointer = document.getElementById("pointer");
+    
+        function isMobile() {
+            return window.innerWidth <= 768; // Adjust threshold as needed
+        }
+    
+        if (!isMobile()) {
+            window.onpointermove = event => { 
+                const { clientX, clientY } = event;
+                
+                blob.animate({
+                    left: `${clientX}px`,
+                    top: `${clientY}px`
+                }, { duration: 3000, fill: "forwards" });
+    
+                pointer.animate({
+                    left: `${clientX}px`,
+                    top: `${clientY}px`
+                }, { duration: 30, fill: "forwards" });
+            };
+        } else {
+            // Ensure blob stays centered on mobile
+            var element = document.getElementById("pointer");
+            element.classList.toggle("hidden");
+            blob.style.left = "50%";
+            blob.style.top = "50%";
+            blob.style.transform = "translate(-50%, -50%)";
+            pointer.style.display = "none"; // Hide cursor effect on mobile
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+            const darkModeToggle = document.querySelector("#down img"); // Target the moon icon
+
+            // Check if dark mode was enabled previously
+            if (localStorage.getItem("darkMode") === "enabled") {
+                body.classList.add("dark-mode");
+            }
+
+            darkModeToggle.addEventListener("click", function () {
+                body.classList.toggle("dark-mode");
+
+                if (body.classList.contains("dark-mode")) {
+                    localStorage.setItem("darkMode", "enabled");
+                } else {
+                    localStorage.setItem("darkMode", "disabled");
+                }
+            });
+        });
+
+        /* Track */
+        const track = document.getElementById("image-track");
+
+        let isDragging = false;
+        let startX = 0;
+        let prevPercentage = -50; // Start with the first image centered
+
+        track.style.transform = `translate(${prevPercentage}%)`;
+
+        const handleOnDown = (e) => {
+            isDragging = true;
+            startX = e.clientX || e.touches[0].clientX;
+        };
+
+        const handleOnMove = (e) => {
+            if (!isDragging) return;
+
+            const currentX = e.clientX || e.touches[0].clientX;
+            const deltaX = startX - currentX;
+            const maxDelta = window.innerWidth / 2;
+
+            let percentage = (deltaX / maxDelta) * -100 + prevPercentage;
+            percentage = Math.max(Math.min(percentage, 0), -100);
+
+            track.style.transform = `translate(${percentage}%)`;
+
+            for (const image of track.getElementsByClassName("image")) {
+                image.style.objectPosition = `${100 + percentage}% center`;
+            }
+        };
+
+        const handleOnUp = () => {
+            isDragging = false;
+            prevPercentage = parseFloat(track.style.transform.replace("translate(", "").replace("%)", "")) || 0;
+        };
+
+        window.addEventListener("mousedown", handleOnDown);
+        window.addEventListener("mousemove", handleOnMove);
+        window.addEventListener("mouseup", handleOnUp);
+
+        window.addEventListener("touchstart", handleOnDown);
+        window.addEventListener("touchmove", handleOnMove);
+        window.addEventListener("touchend", handleOnUp);
+
+        window.addEventListener("scroll", function () {
+            const imageTrack = document.getElementById("image-track");
+            const scrollPosition = window.scrollY;
+
+            if (scrollPosition > window.innerHeight / 2) {
+                imageTrack.classList.add("visible");
+            } else {
+                imageTrack.classList.remove("visible");
+            }
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchForm = document.querySelector("form");
+            const searchInput = document.querySelector("#search");
+
+            searchForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+                
+                const query = searchInput.value.trim();
+                if (query.toLowerCase().startsWith("id=")) {
+                    // Redirect to a search results page or Google
+                    window.location.href = `/article?${query.toLowerCase()}`;
+                }
+            });
+        });
+
+        function random() {
+            const rowCount = parseInt(document.getElementById("rowcount").innerText, 10);
+            const randomId = Math.floor(Math.random() * rowCount) + 1;
+            window.location.href = `/article?id=${randomId}`;
+        }
+    </script>
+    
+
+</body>
+</html>
