@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #publish {
+            background-color: rgb(0, 73, 67);
+        }
+        h1 { color: #333; }
+        p { font-size: 20px; line-height: 1.6; }
+        #output img {
+            width: 100vw; /* Set a fixed width */
+            height: auto; /* Maintains aspect ratio */
+            display: block; /* Prevents inline layout issues */
+        }
+
+        #publishedContainer {
+            display: flex;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        .published-content {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .related-posts {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            width: 30%;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="publishedContainer">
+        <div class="published-content">
+            <h1 id="publishedTitle"></h1>
+            <p id="publishedAuthor"></p>
+            <p id="publishedCredits"></p>
+            <p id="publishedCategory"></p>
+            <p id="publishedTags"></p>
+            <p id="publishedDate"></p>
+            <img id="publishedImage" alt="Uploaded">
+            <div id="publishedMarkdown"></div>
+        </div>
+        <div class="related-posts">
+            <h3>Similar Posts on this Topic</h3>
+            <p>Explore more articles related to <span id="relatedCategory"></span>.</p>
+        </div>
+    </div>
+
+    <h1>${title_article}</h1>
+    <textarea id="markdown-input">${content}</textarea>
+    <div id="output"></div>
+    <p><strong>Author:</strong> ${author}</p>
+    <p><strong>Date:</strong> ${date}</p>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.getElementById("output").innerHTML = marked.parse(
+            document.getElementById("markdown-input").value
+        );
+        const element = document.getElementById("markdown-input");
+        element.remove();
+    </script>
+    
+</body>
+</html>
